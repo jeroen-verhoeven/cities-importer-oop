@@ -15,11 +15,19 @@ require_once plugin_dir_path(__FILE__) . 'inc/cities-summary.php';
 
 //Register WP-CLI command
 if(defined('WP_CLI') && WP_CLI){
-    WP_CLI::add_command('import:cities', function($args, $assoc_args) {
+    WP_CLI::add_command('import:cities-oop', function($args, $assoc_args) {
 
         $with_summaries = isset($assoc_args['summary']);
 
-        WP_CLI::log("Starting European capitals import...");
+        WP_CLI::log(
+            WP_CLI::colorize(
+                "%B\n" .
+                "  ========================================\n" .
+                "          CITIES IMPORTER - OOP\n" .
+                "  ========================================\n" .
+                "%n"
+            )
+        );
 
         import_european_capitals();
 
