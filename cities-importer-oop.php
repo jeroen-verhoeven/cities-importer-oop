@@ -8,6 +8,7 @@
 
 if(!defined('ABSPATH')) exit;
 
+require_once plugin_dir_path(__FILE__) . 'inc/CityClass.php';
 require_once plugin_dir_path(__FILE__) . 'inc/city-post-type.php';
 require_once plugin_dir_path(__FILE__) . 'inc/rest-countries-api.php';
 require_once plugin_dir_path(__FILE__) . 'inc/capitals-importer.php';
