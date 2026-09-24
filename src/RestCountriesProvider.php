@@ -51,6 +51,28 @@ class RestCountriesProvider implements CapitalProvider{
         }
 
         WP_CLI::log("Successfully retrieved " . count($countries) . " countries.");
-        return $countries;
+
+        $capitals = [];
+
+        foreach($countries as $country){
+
+            $capital = $country['capitals'][0]['name'] ?? null;
+            if (!$capital) {
+                continue;
+            }
+
+            $capitals[] = new CapitalData(
+                cca2: $country['codes']['alpha_2']?? '',
+                cityName: $country['capitals'][0]['name'],
+                countryName: $country['names']['common'] ?? '',
+                latitude: $country['capitals'][0]['coordinates']['lat'] ?? null,
+                longitude: $country['capitals'][0]['coordinates']['lng'] ?? null,
+                currency: $country['currencies'][0]['name'] ?? '',
+                population: $country['population'] ?? null,
+                flagUrl: $country['flag']['url_png'] ?? '',
+            );
+        }
+
+        return $capitals;
     }
 }
