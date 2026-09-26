@@ -40,4 +40,15 @@ class CityRepository{
             return is_int($postId) ? $postId : null;
         }
     }
+
+    public function saveFields(int $postId, CapitalData $capital) : void {
+
+        $population = is_int($capital->population) ? number_format($capital->population, 0, ',', '.') : null;
+
+        update_field('country', $capital->countryName, $postId);
+        update_field('latitude', $capital->latitude, $postId);
+        update_field('longitude', $capital->longitude, $postId);
+        update_field('population', $population, $postId);
+        update_field('currency', ucfirst($capital->currency), $postId);
+    }
 }
