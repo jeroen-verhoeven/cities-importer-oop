@@ -1,6 +1,6 @@
 <?php
 
- class CapitalData{
+class CapitalData{
 
     public function __construct(
         public readonly string $cca2,
@@ -14,4 +14,4 @@
     ){
 
     }
- }
+}
