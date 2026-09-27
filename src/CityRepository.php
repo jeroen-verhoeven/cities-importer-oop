@@ -6,6 +6,9 @@ class CityRepository{
 
     }
 
+    /**
+     * Looks up a city post by its stable cca2 code.
+     */
     public function findIdByCca2(string $cca2) : ?int {
         $query = new WP_Query([
             'post_type'      => 'city_pt',
@@ -20,6 +23,9 @@ class CityRepository{
         return $result;
     }
 
+    /**
+     * Creates a new city post, or updates the title of an existing one.
+     */
     public function createOrUpdate(CapitalData $capital) : ?int {
         $cityId = $this->findIdByCca2($capital->cca2);
 
@@ -41,6 +47,9 @@ class CityRepository{
         }
     }
 
+    /**
+     * Writes ACF fields for a city post.
+     */
     public function saveFields(int $postId, CapitalData $capital) : void {
 
         $population = is_int($capital->population) ? number_format($capital->population, 0, ',', '.') : null;

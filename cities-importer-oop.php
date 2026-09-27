@@ -15,11 +15,11 @@ require_once plugin_dir_path(__FILE__) . 'src/CityRepository.php';
 require_once plugin_dir_path(__FILE__) . 'src/CapitalsImporter.php';
 require_once plugin_dir_path(__FILE__) . 'src/CityPostType.php';
 
-// Post type registreren
+//Register City post type
 $cityPostType = new CityPostType();
 add_action('init', [$cityPostType, 'registerPostType']);
 
-// WP-CLI command
+//WP-CLI command
 if (defined('WP_CLI') && WP_CLI) {
     WP_CLI::add_command('import:cities', function ($args, $assoc_args) {
         $apiKey = defined('RESTCOUNTRIES_API_KEY') ? RESTCOUNTRIES_API_KEY : '';

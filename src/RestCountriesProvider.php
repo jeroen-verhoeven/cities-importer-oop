@@ -8,6 +8,12 @@ class RestCountriesProvider implements CapitalProvider{
 
     }
 
+    /**
+     * Fetches European capitals from the REST Countries API.
+     * Returns raw, unformatted values
+     *
+     * @return CapitalData[]
+     */
     public function fetchCapitals() : array{
         $url = 'https://api.restcountries.com/countries/v5?q=europe&limit=100';
 

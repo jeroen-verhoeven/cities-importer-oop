@@ -7,6 +7,9 @@ class CapitalsImporter{
     ) {
     }
 
+    /**
+     * @return int Number of cities successfully created or updated.
+     */
     public function run(): int {
         $capitals = $this->provider->fetchCapitals();
         $count = 0;
