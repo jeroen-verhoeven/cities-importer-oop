@@ -22,7 +22,13 @@ add_action('init', [$cityPostType, 'registerPostType']);
 //WP-CLI command
 if (defined('WP_CLI') && WP_CLI) {
     WP_CLI::add_command('import:cities', function ($args, $assoc_args) {
+        WP_CLI::log("Starting script.");
+
         $apiKey = defined('RESTCOUNTRIES_API_KEY') ? RESTCOUNTRIES_API_KEY : '';
+
+        if(!$apiKey){
+            WP_CLI::error('RESTCOUNTRIES_API_KEY is not defined.');
+        }
 
         $provider = new RestCountriesProvider($apiKey);
         $cities = new CityRepository();
