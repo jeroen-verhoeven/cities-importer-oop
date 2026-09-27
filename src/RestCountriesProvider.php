@@ -63,7 +63,7 @@ class RestCountriesProvider implements CapitalProvider{
         foreach($countries as $country){
 
             $capital = $country['capitals'][0]['name'] ?? null;
-            if (!$capital) {
+            if(!$capital){
                 continue;
             }
 

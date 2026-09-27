@@ -12,12 +12,18 @@ class CapitalsImporter{
      */
     public function run(): int {
         $capitals = $this->provider->fetchCapitals();
+        $total = count($capitals);
         $count = 0;
 
-        foreach($capitals as $capital) {
+        foreach($capitals as $index => $capital) {
+            $position = $index + 1;
+
+            WP_CLI::log("[{$position}/{$total}] Processing: {$capital->cityName}");
+
             $postId = $this->cities->createOrUpdate($capital);
 
             if($postId === null) {
+                WP_CLI::warning("[{$position}/{$total}] Skipping {$capital->cityName}: could not create or update post.");
                 continue;
             }
 
