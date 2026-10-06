@@ -11,11 +11,12 @@ class CityRepository{
      */
     public function findIdByCca2(string $cca2) : ?int {
         $query = new WP_Query([
-            'post_type'      => 'city_pt',
-            'meta_key'       => 'cca2',
-            'meta_value'     => $cca2,
-            'fields'         => 'ids',
-            'posts_per_page' => 1,
+            'post_type'         => 'city_pt',
+            'meta_key'          => 'cca2',
+            'meta_value'        => $cca2,
+            'fields'            => 'ids',
+            'posts_per_page'    => 1,
+            'post_status'       => 'any',
         ]);
 
         $result = $query->posts[0] ?? null;
@@ -35,15 +36,16 @@ class CityRepository{
                 'post_title'    => $capital->cityName,
             ]);
 
-            return is_int($postId) ? $postId : null;
+            return (is_int($postId) && $postId > 0) ? $postId : null;
         } else {
             $postId = wp_insert_post([
                 'post_title'    => $capital->cityName,
                 'post_type'     => 'city_pt',
                 'post_status'   => 'publish',
+                'meta_input'    => ['cca2' => $capital->cca2],
             ]);
 
-            return is_int($postId) ? $postId : null;
+            return (is_int($postId) && $postId > 0) ? $postId : null;
         }
     }
 
@@ -54,6 +56,7 @@ class CityRepository{
 
         $population = is_int($capital->population) ? number_format($capital->population, 0, ',', '.') : null;
 
+        update_post_meta($postId, 'cca2', $capital->cca2);
         update_field('country', $capital->countryName, $postId);
         update_field('latitude', $capital->latitude, $postId);
         update_field('longitude', $capital->longitude, $postId);

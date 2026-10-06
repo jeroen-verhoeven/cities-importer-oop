@@ -64,12 +64,19 @@ class RestCountriesProvider implements CapitalProvider{
 
             $capital = $country['capitals'][0]['name'] ?? null;
             if(!$capital){
+                WP_CLI::warning("No capital name found. Skipping...");
+                continue;
+            }
+
+            $cca2 = $country['codes']['alpha_2'] ?? '';
+            if(!$cca2){
+                WP_CLI::warning("No CCA2 code found for: " . $capital . " Skipping...");
                 continue;
             }
 
             $capitals[] = new CapitalData(
-                cca2: $country['codes']['alpha_2']?? '',
-                cityName: $country['capitals'][0]['name'],
+                cca2: $cca2,
+                cityName: $capital,
                 countryName: $country['names']['common'] ?? '',
                 latitude: $country['capitals'][0]['coordinates']['lat'] ?? null,
                 longitude: $country['capitals'][0]['coordinates']['lng'] ?? null,
